@@ -1,0 +1,11 @@
+# Ignore eclipse project files
+.project
+.classpath
+.settings
+
+# Ignore target folder
+target
+
+# Ignore local data files
+*.json
+
