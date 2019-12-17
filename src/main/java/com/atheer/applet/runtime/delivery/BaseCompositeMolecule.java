@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.atheer.applet.runtime.AppletContext;
 import com.atheer.applet.runtime.Navigation;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 
 public class BaseCompositeMolecule extends BaseMolecule implements CompositeMolecule {
@@ -42,7 +43,7 @@ public class BaseCompositeMolecule extends BaseMolecule implements CompositeMole
 	}
 
 	@Override
-	public void finish(AppletContext context) {
+	public void finish(AppletContext context) throws ValidationException {
 		this.status = CompletionStatus.Completed;
 		for(Molecule child: children) {
 			if(child.getStatus() != CompletionStatus.Completed) {

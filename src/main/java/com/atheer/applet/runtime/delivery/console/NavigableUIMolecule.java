@@ -9,6 +9,7 @@ import java.util.Scanner;
 import com.atheer.applet.runtime.AppletContext;
 import com.atheer.applet.runtime.delivery.validator.RangeValidator;
 import com.atheer.applet.runtime.delivery.validator.RequiredValidator;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 import com.atheer.applet.util.StringUtil;
 
@@ -135,11 +136,8 @@ public class NavigableUIMolecule extends UIMolecule {
 	}
 
 	@Override
-	public void finish(AppletContext context) {
-		if(!validate()) {
-			this.render();
-			return;
-		} 
+	public void finish(AppletContext context) throws ValidationException {
+		validate();
 		this.status = CompletionStatus.Completed;
 		context.setStatus(this.id, this.status);
 		
@@ -152,14 +150,15 @@ public class NavigableUIMolecule extends UIMolecule {
 	}
 
 	@Override
-	public boolean validate() {
+	public void validate() throws ValidationException {
 		for(UIMolecule child: children) {
-			if(!child.validate()) {
+			try {
+				child.validate();
+			} catch (ValidationException ve) {
 				setFocus(child);
-				return false;
+				throw ve;
 			}
 		}
-		return true;
 	}
 
 	protected void renderHeaders() {

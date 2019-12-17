@@ -81,17 +81,16 @@ public abstract class UIMolecule extends BaseMolecule {
 		this.validators.add(validator);
 	}
 	
-	public boolean validate() {
+	public void validate() throws ValidationException {
 		try {
 			for(Validator validator: this.validators) {
 				validator.validate(label, value);
 				errorText = "";
 			}
-		} catch(ValidationException ex) {
-			errorText = ex.getMessage();
-			return false;
+		} catch(ValidationException ve) {
+			errorText = ve.getMessage();
+			throw ve;
 		} 
-		return true;
 	}
 	
 	protected void renderBlankLines(int number) {

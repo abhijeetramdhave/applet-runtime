@@ -10,6 +10,7 @@ import com.atheer.applet.design.Condition;
 import com.atheer.applet.runtime.delivery.Device;
 import com.atheer.applet.runtime.delivery.Molecule;
 import com.atheer.applet.runtime.delivery.console.UIMolecule;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.expressions.SimpleConditionResolver;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 import com.atheer.applet.runtime.tracking.MoleculeTrackingData;
@@ -65,21 +66,27 @@ public class AppletRuntime implements AppletContext {
 
 	@Override
 	public void previous() {
-		this.request = Navigation.Previous;
-		if(visitedIndex > 0) {
-			current.finish(this);
-			Molecule previous = visited.get(--visitedIndex);
-			previous.execute(this);
+		try {
+			this.request = Navigation.Previous;
+			if(visitedIndex > 0) {
+				current.finish(this);
+				Molecule previous = visited.get(--visitedIndex);
+				previous.execute(this);
+			}
+		} catch (ValidationException ve) {
 		}
 	}
 
 	@Override
 	public void next() {
-		this.request = Navigation.Next;
-		if(visitedIndex < visited.size() - 1) {
-			current.finish(this);
-			Molecule next = visited.get(++visitedIndex);
-			next.execute(this);
+		try {
+			this.request = Navigation.Next;
+			if(visitedIndex < visited.size() - 1) {
+				current.finish(this);
+				Molecule next = visited.get(++visitedIndex);
+				next.execute(this);
+			}
+		} catch (ValidationException e) {
 		}
 	}
 

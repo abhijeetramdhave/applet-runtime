@@ -1,6 +1,7 @@
 package com.atheer.applet.runtime.delivery;
 
 import com.atheer.applet.runtime.AppletContext;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 
 public interface Molecule {
@@ -9,7 +10,7 @@ public interface Molecule {
 	
 	public void execute(AppletContext context);
 	
-	public void finish(AppletContext context);
+	public void finish(AppletContext context) throws ValidationException;
 
 	public String getId();
 	

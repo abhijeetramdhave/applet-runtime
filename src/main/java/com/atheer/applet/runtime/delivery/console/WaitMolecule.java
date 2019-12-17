@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.atheer.applet.design.Condition;
 import com.atheer.applet.runtime.AppletContext;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 import com.atheer.applet.util.StringUtil;
 
@@ -61,7 +62,7 @@ public class WaitMolecule extends NavigableUIMolecule {
 	}
 
 	@Override
-	public void finish(AppletContext context) {
+	public void finish(AppletContext context) throws ValidationException {
 		context.setStatus(id, CompletionStatus.Completed);
 		super.finish(context);
 	}

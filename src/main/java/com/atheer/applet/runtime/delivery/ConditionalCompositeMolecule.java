@@ -5,6 +5,7 @@ import java.util.Date;
 import com.atheer.applet.design.Condition;
 import com.atheer.applet.runtime.AppletContext;
 import com.atheer.applet.runtime.Navigation;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 import com.atheer.applet.runtime.tracking.MoleculeTrackingData;
 
@@ -48,7 +49,7 @@ public class ConditionalCompositeMolecule extends BaseCompositeMolecule {
 	}
 
 	@Override
-	public void finish(AppletContext context) {
+	public void finish(AppletContext context) throws ValidationException {
 		if(canExecute) {
 			super.finish(context);
 		} else {

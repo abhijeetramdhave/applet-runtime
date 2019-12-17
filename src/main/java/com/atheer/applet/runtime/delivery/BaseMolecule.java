@@ -3,6 +3,7 @@ package com.atheer.applet.runtime.delivery;
 import java.util.Date;
 
 import com.atheer.applet.runtime.AppletContext;
+import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
 import com.atheer.applet.runtime.tracking.MoleculeTrackingData;
 
@@ -66,8 +67,17 @@ public class BaseMolecule implements Molecule {
 	@Override
 	public void execute(AppletContext context) {
 		init(context);
-		doExecute(context);
-		finish(context);
+		
+		boolean success = false;
+		while(!success) {
+			doExecute(context);
+			try {
+				finish(context);
+				success = true;
+			} catch(ValidationException ve) {
+				success = false;
+			}
+		}
 	}
 	
 	@Override
@@ -88,7 +98,7 @@ public class BaseMolecule implements Molecule {
 	}
 
 	@Override
-	public void finish(AppletContext context) {
+	public void finish(AppletContext context) throws ValidationException {
 		MoleculeTrackingData trackingData = context.getTrackingData(id);
 		trackingData.setEndTime(new Date());
 	}
