@@ -10,6 +10,7 @@ import com.atheer.applet.design.Condition;
 import com.atheer.applet.runtime.delivery.Device;
 import com.atheer.applet.runtime.delivery.Molecule;
 import com.atheer.applet.runtime.delivery.console.UIMolecule;
+import com.atheer.applet.runtime.delivery.console.WaitMolecule;
 import com.atheer.applet.runtime.delivery.validator.ValidationException;
 import com.atheer.applet.runtime.expressions.SimpleConditionResolver;
 import com.atheer.applet.runtime.tracking.CompletionStatus;
@@ -61,7 +62,7 @@ public class AppletRuntime implements AppletContext {
 	}
 	
 	private boolean isReVisitable(Molecule molecule) {
-		return (molecule instanceof UIMolecule);
+		return (molecule instanceof UIMolecule && !(molecule instanceof WaitMolecule));
 	}
 
 	@Override
@@ -69,6 +70,7 @@ public class AppletRuntime implements AppletContext {
 		try {
 			this.request = Navigation.Previous;
 			if(visitedIndex > 0) {
+				System.out.println("Navigating to previous visited...");
 				current.finish(this);
 				Molecule previous = visited.get(--visitedIndex);
 				previous.execute(this);
@@ -82,9 +84,12 @@ public class AppletRuntime implements AppletContext {
 		try {
 			this.request = Navigation.Next;
 			if(visitedIndex < visited.size() - 1) {
+				System.out.println("Navigating to next visited...");
 				current.finish(this);
 				Molecule next = visited.get(++visitedIndex);
 				next.execute(this);
+			} else {
+				System.out.println("Navigation request next initiated...");
 			}
 		} catch (ValidationException e) {
 		}
@@ -93,6 +98,7 @@ public class AppletRuntime implements AppletContext {
 	@Override
 	public void exit() {
 		this.request = Navigation.Exit;
+		System.out.println("Navigation request exit initiated...");
 	}
 
 	public Navigation getRequest() {

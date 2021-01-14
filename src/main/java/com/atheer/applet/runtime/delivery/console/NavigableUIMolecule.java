@@ -187,6 +187,7 @@ public class NavigableUIMolecule extends UIMolecule {
 		String input = handleBlank(in.nextLine());
 		boolean stay = processInput(input);
 		if(stay) {
+			System.out.println("Staying back...");
 			render();
 		}
 	}
@@ -206,6 +207,7 @@ public class NavigableUIMolecule extends UIMolecule {
 		if(isCommand(input)) {
 			return processCommand(input);
 		} else if(children != null && !children.isEmpty()) {
+			System.out.println("Processing input...");
 			children.get(current).setValue(input);
 			children.get(current).setErrorText("");
 			processCommand("+");
@@ -222,6 +224,7 @@ public class NavigableUIMolecule extends UIMolecule {
 	}
 	
 	protected boolean processCommand(String input) {
+		System.out.println("Processing command " + input);
 		switch (input) {
 		case "+": 
 			current = Math.min(current + 1, children.size() - 1);

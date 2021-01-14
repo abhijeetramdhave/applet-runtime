@@ -178,7 +178,7 @@ public class App
 		section.addStep(vehicleDetails());
 		section.addStep(ownerDetails());
 		section.addStep(insuranceDetails());
-//		section.addStep(inspectionRide());
+		section.addStep(inspectionRide());
 		section.addStep(createBranch());
 		section.addStep(finalStep());
 		return section;
@@ -207,6 +207,7 @@ public class App
 		NumberResponse yearOfPassing = new NumberResponse("RES00003", "yearOfPassing", "Year of Passing");
 		yearOfPassing.setMaxValue(2019.0);
 		yearOfPassing.setMinValue(2000.0);
+		yearOfPassing.setRequired(true);
 		
 		step.addResponse(vehicleNumber).addResponse(brand).addResponse(yearOfPassing);
 		

@@ -70,11 +70,14 @@ public class BaseMolecule implements Molecule {
 		
 		boolean success = false;
 		while(!success) {
+			System.out.println("Executing " + this.name);
 			doExecute(context);
 			try {
 				finish(context);
 				success = true;
+				System.out.println("Finish returned successfully...");
 			} catch(ValidationException ve) {
+				System.out.println("Validation exception: " + ve.getMessage());
 				success = false;
 			}
 		}

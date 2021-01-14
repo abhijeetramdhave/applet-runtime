@@ -74,9 +74,9 @@ public abstract class MoleculeFactory {
 	}
 
 	public Molecule getSectionMolecule(Section section) {
-		setSectionLabel(section.getLabel());
 		BaseCompositeMolecule sectionMolecule = new BaseCompositeMolecule(section.getId(), section.getName(), section.getLabel());
 		for(Step step: section.getSteps()) {
+			setSectionLabel(section.getLabel());
 			sectionMolecule.addChild(getStepMolecule(step));
 		}
 		return sectionMolecule;

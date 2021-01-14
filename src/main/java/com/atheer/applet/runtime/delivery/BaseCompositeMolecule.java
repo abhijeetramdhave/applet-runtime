@@ -34,6 +34,7 @@ public class BaseCompositeMolecule extends BaseMolecule implements CompositeMole
 	@Override
 	protected void doExecute(AppletContext context) {
 		for(Molecule child: children) {
+			System.out.println("Executing next child...");
 			child.execute(context);
 			if(context.getRequest().equals(Navigation.Exit)) {
 				return;

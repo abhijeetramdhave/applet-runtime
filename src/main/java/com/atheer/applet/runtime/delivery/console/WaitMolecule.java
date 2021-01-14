@@ -39,7 +39,7 @@ public class WaitMolecule extends NavigableUIMolecule {
 			counter--;
 			render();
 		}
-		getInput();
+		context.next();
 	}
 
 	private void renderMessage() {
